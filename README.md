@@ -12,10 +12,10 @@ Parameter tuning would be needed to optimize for other hardware systems (ARM, Po
 Fork this project from Github.
 There's no external dependencies
  Run as Java application, and enter a N value when asked in console.
- OR Jdk 8/9
+<p> OR Jdk 8/9
 javac SSOZJ3A.java
 java SSOZJ3A
- OR JDK 11
+<p> OR JDK 11
 java SSOZJ3A.java
 
 Original nim source file, and updates, available here:
@@ -50,7 +50,7 @@ JAVA Example :
  total time = 30.339 secs
 ```
  NIM Example :
- ```
+```
 c:\~\nim-1.0.4>twinprimes_ssoz
  200000000000
  threads = 8
@@ -70,16 +70,15 @@ Mathematical and technical basis for implementation are explained here:
 [https://www.scribd.com/document/395415391/The-Use-of-Prime-Generators-to-
 Implement-Fast-Twin-Primes-Sieve-Of-Zakiya-SoZ-Applications-to-Number-Theory-
 and-Implications-for-the-Riemann-Hypoth]()
-[https://www.scribd.com/doc/228155369/The-Segmented-Sieve-of-Zakiya-SSoZ]()
-[https://www.scribd.com/document/266461408/Primes-Utils-Handbook]()
+<p>[https://www.scribd.com/doc/228155369/The-Segmented-Sieve-of-Zakiya-SSoZ]()
+<p>[https://www.scribd.com/document/266461408/Primes-Utils-Handbook]()
 
-Copyright (c) 2017-20 Jabari Zakiya -- jzakiya at gmail dot com<p>
 Java version 0.0.20 for fun - Pascal Pechard
 Version Date: 2019/12/20
 
 ## Releases
 
-* 
+* 3A
 *
 
 ## Getting Started
@@ -93,7 +92,7 @@ There is no documentation and no support, so you should be ready to start explor
 
 ## Authors
 
-Jabari Zakiya 
+Copyright (c) 2017-20 Jabari Zakiya -- jzakiya at gmail dot com
 
 ## License
 
