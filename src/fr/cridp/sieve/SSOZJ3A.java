@@ -417,20 +417,20 @@ public class SSOZJ3A {
 			for (Long prime : primes) {
 				// if 1st segment init nextp array vals
 				if (kmin == K1) {
-				long[] nextp_init = nextp_init(r_hi, prime, kmin);
-				nextp[j << 1] = nextp_init[0];
-				nextp[j << 1 | 1] = nextp_init[1];
-			}
-			// for lower twin pair residue track
-			// starting from this resgroup in seg
-			int k = (int) nextp[j << 1];
-			// mark primenth resgroup bits prime mults
-			while (k < Kn) {
-				if (s > 0) seg[k >>> 3] |= (1 << (k & 7))&0XFF;
-				else seg[k] |= 1;
-				// set next prime multiple resgroup
-				k += prime;
-			}
+					long[] nextp_init = nextp_init(r_hi, prime, kmin);
+					nextp[j << 1] = nextp_init[0];
+					nextp[j << 1 | 1] = nextp_init[1];
+				}
+				// for lower twin pair residue track
+				// starting from this resgroup in seg
+				int k = (int) nextp[j << 1];
+				// mark primenth resgroup bits prime mults
+				while (k < Kn) {
+					if (s > 0) seg[k >>> 3] |= (1 << (k & 7))&0XFF;
+					else seg[k] |= 1;
+					// set next prime multiple resgroup
+					k += prime;
+				}
 				// save 1st resgroup in next eligible seg
 				// for upper twin pair residue track
 				nextp[j << 1] = k - Kn;
