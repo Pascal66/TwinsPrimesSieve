@@ -101,9 +101,9 @@ This code is provided free and subject to copyright and terms of the
 GNU General Public License Version 3, GPLv3, or greater.
 License copy/terms are here:  http://www.gnu.org/licenses/
 
-Copyright (c) 2017-19 Jabari Zakiya -- jzakiya at gmail dot com
-Java version 0.0.19 for fun - Pascal Pechard
-Version Date: 2019/12/19
+Copyright (c) 2017-20 Jabari Zakiya -- jzakiya at gmail dot com
+Java version 0.0.20 for fun - Pascal Pechard
+Version Date: 2019/12/20
  */
 
 public class SSOZJ3A {
