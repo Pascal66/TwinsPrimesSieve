@@ -343,7 +343,6 @@ public class SSOZJ3A {
 	}
 
 	/**
-	 * Initialize 'nextp' array for given twin pair residues for thread.
 	 * Compute 1st prime multiple resgroups for each prime r1..sqrt(N)
 	 * and store consecutively as lo_tp|hi_tp pairs for their restracks.
 	 *

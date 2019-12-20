@@ -19,7 +19,7 @@ java SSOZJ3A
 java SSOZJ3A.java
 
 This original java source file, and updates, will be available here:
-https://gist.github.com/Pascal66/4d4229e88f4002641ddcaa5eccd0f6d5
+[https://gist.github.com/Pascal66/4d4229e88f4002641ddcaa5eccd0f6d5]()
 
 Not necessary (nor real improvment before 1E12) to use jvm option like:
  -XX:+AggressiveOpts
@@ -34,7 +34,7 @@ TOSHIBA SATELLITE L875-13D Core i7-3630QM@2.4Ghz 12Go(8+4) Ram DDR3 800Mhz
 Cache1 32Ko, Cache2 256Ko, Cache3 6Mo
 
 JAVA Example :
- Please enter an range of integer (comma or space separated):
+``` Please enter an range of integer (comma or space separated):
  0 2e11
  Max threads = 8
  generating parameters for P 13
@@ -48,9 +48,10 @@ JAVA Example :
  last segment = 368551 resgroups; segment slices = 13
  total twins = 424084653; last twin = 199999999890+/-1
  total time = 30.339 secs
-
+```
  NIM Example :
- c:\~\nim-1.0.4>twinprimes_ssoz
+ ```
+c:\~\nim-1.0.4>twinprimes_ssoz
  200000000000
  threads = 8
  each thread segment is [1 x 65536] bytes array
@@ -63,18 +64,18 @@ JAVA Example :
  last segment = 368551 resgroups; segment slices = 13
  total twins = 424084653; last twin = 199999999890+/-1
  total time = 32.507 secs
-
+```
  Inspired from a discussion @see "https://forum.nim-lang.org/t/4950" and
 Original nim source file, and updates, available here:
-https://gist.github.com/jzakiya/6c7e1868bd749a6b1add62e3e3b2341e
-This work isnt here to prove anything, or wich language is better or not.
+[https://gist.github.com/jzakiya/6c7e1868bd749a6b1add62e3e3b2341e]()
+
 
 Mathematical and technical basis for implementation are explained here:
-https://www.scribd.com/document/395415391/The-Use-of-Prime-Generators-to-
+[https://www.scribd.com/document/395415391/The-Use-of-Prime-Generators-to-
 Implement-Fast-Twin-Primes-Sieve-Of-Zakiya-SoZ-Applications-to-Number-Theory-
-and-Implications-for-the-Riemann-Hypoth
-https://www.scribd.com/doc/228155369/The-Segmented-Sieve-of-Zakiya-SSoZ
-https://www.scribd.com/document/266461408/Primes-Utils-Handbook
+and-Implications-for-the-Riemann-Hypoth]()
+[https://www.scribd.com/doc/228155369/The-Segmented-Sieve-of-Zakiya-SSoZ]()
+[https://www.scribd.com/document/266461408/Primes-Utils-Handbook]()
 
 Copyright (c) 2017-20 Jabari Zakiya -- jzakiya at gmail dot com
 Java version 0.0.20 for fun - Pascal Pechard
@@ -96,15 +97,7 @@ There is no documentation and no support, so you should be ready to start explor
 
 ## Authors
 
-Jabari Zakiya was born and raised in Washington, DC. 
- After graduating from McKinley Tech HS, he received a BSEE from Cornell University, and then a MSEE from Ga Tech. 
- He then worked at NASA Goddard Space Flight Center (GFSC) in Greenbelt, MD for 15 years, as an engineer building space data communication systems. 
- After NASA he co-founded 3rdeye Technologies, to leverage hardware IP (intellectual property) he created around encryption algorithms. 
- Most recently, he has developed extremely fast prime sieve methods, the Sieve of Zakiya (SoZ) and Segmented Sieve of Zakiya (SSoZ). 
- He's also fluent in various programming languages, and has written various papers about programming. 
- Jabari has been teaching and tutoring math basically all his life. 
- He's formally been tutoring/teaching math in the 2000's with various tutoring companies, and freelance. 
- He's also taught a semester of calculus at a DC High School in 2008.
+Jabari Zakiya 
 
 ## License
 
@@ -114,6 +107,5 @@ License copy/terms are here:  http://www.gnu.org/licenses/
 - see the [LICENSE](LICENSE) file for details
 
 ## Credits
-Big thanks to
-* Jabari.
+
 
