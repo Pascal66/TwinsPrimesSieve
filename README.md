@@ -65,7 +65,6 @@ c:\~\nim-1.0.4>twinprimes_ssoz
  total twins = 424084653; last twin = 199999999890+/-1
  total time = 32.507 secs
 ```
- Inspired from a discussion @see "https://forum.nim-lang.org/t/4950" and
 
 Mathematical and technical basis for implementation are explained here:
 [https://www.scribd.com/document/395415391/The-Use-of-Prime-Generators-to-
@@ -74,7 +73,7 @@ and-Implications-for-the-Riemann-Hypoth]()
 [https://www.scribd.com/doc/228155369/The-Segmented-Sieve-of-Zakiya-SSoZ]()
 [https://www.scribd.com/document/266461408/Primes-Utils-Handbook]()
 
-Copyright (c) 2017-20 Jabari Zakiya -- jzakiya at gmail dot com
+Copyright (c) 2017-20 Jabari Zakiya -- jzakiya at gmail dot com<p>
 Java version 0.0.20 for fun - Pascal Pechard
 Version Date: 2019/12/20
 

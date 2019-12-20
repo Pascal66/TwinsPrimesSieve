@@ -145,7 +145,7 @@ public class SSOZJ3A {
 	 * This give loosing time at setup and benefit for parallel computation
 	 * @param prime int
 	 */
-	static void genPGparameters(int prime){
+	private static void genPGparameters(int prime){
 		System.out.println("generating parameters for P "+ prime);
 		final long[] primes = {2, 3, 5, 7, 11, 13, 17, 19, 23};
 		modpg = ONE;  res_0 = 0L;
@@ -219,7 +219,7 @@ public class SSOZJ3A {
 	 * @param start_range BigInteger
 	 * @param end_range bigInteger
 	 */
-	static void selectPG(BigInteger start_range, BigInteger end_range) {
+	private static void selectPG(BigInteger start_range, BigInteger end_range) {
 		final BigInteger range = end_range.subtract(start_range);
 		int pg = 3;
 		if (end_range.compareTo(BigInteger.valueOf(49L)) < 0) {
@@ -258,7 +258,7 @@ public class SSOZJ3A {
 	 * Any algorithm (fast|small) is usable. Here the SoZ for P5 is used.
 	 * @param val bigInteger
 	 */
-	static void sozpg(BigInteger val) {
+	private static void sozpg(BigInteger val) {
 		final int md = 30;             // P5's modulus value
 		final int rscnt = 8;           // P5's residue count
 
@@ -627,8 +627,8 @@ public class SSOZJ3A {
 	/**
 	 * One Efficient BigInteger sqrt, we are not using flot or double, just integer
 	 * @see "https://stackoverflow.com/questions/4407839/how-can-i-find-the-square-root-of-a-java-biginteger"
-	 * @param x
-	 * @return sqrt for BigInteger
+	 * @param x BigInteger
+	 * @return BigInteger sqrt of x
 	 */
 	private static BigInteger Bsqrt(BigInteger x) {
 		BigInteger div = BigInteger.ZERO.setBit(x.bitLength()/2);
@@ -677,36 +677,9 @@ public class SSOZJ3A {
 		return new long[]{div, mod};
 	}
 
-	/**Old school efficient modulo, skip pow2, this never happen*/
-	@Deprecated
-	static long modFast(long n, long b) {return  (isPow2(b))? modPow2(n,b) : modOld(n, b); }
-	private static long modPow2(long n, long p2) {return n & (p2-1); }
-	private static boolean isPow2(long n) {return ((n-1) & n ) == 0; }
-	private static long modOld(long n, long b) {return n % b;}
-
-	/**
-	 * Conditionally set or clear bits without branching
-	 * http://graphics.stanford.edu/~seander/bithacks.html#ConditionalSetOrClearBitsWithoutBranching
-	 * @param w int
-	 * @param m int
-	 * @return int
-	 */
-	static int setBit(int f, int w, int m) {
-//		bool f;         // conditional flag
-//		unsigned int m; // the bit mask
-//		unsigned int w; // the word to modify:  if (f) w |= m; else w &= ~m;
-//Original
-//		w |= m; //4850217 ns
-// Or
-//		w ^= (-f ^ w) & m; //2586507 ns
-// Or, for superscalar CPUs:
-		w = (w & ~m) | (-f & m); //2482051 ns
-		return w;
-	}
-
 	/**
 	 * Just a little workaround to print state of threads
-	 * This isnt working in a ide console, just in command line call
+	 * This isn't working in a ide console, just in command line call
 	 */
 	@FunctionalInterface
 	public interface Callback<T> {
