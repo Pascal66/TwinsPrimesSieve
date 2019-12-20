@@ -18,8 +18,8 @@ java SSOZJ3A
  OR JDK 11
 java SSOZJ3A.java
 
-This original java source file, and updates, will be available here:
-[https://gist.github.com/Pascal66/4d4229e88f4002641ddcaa5eccd0f6d5]()
+Original nim source file, and updates, available here:
+[https://gist.github.com/jzakiya/6c7e1868bd749a6b1add62e3e3b2341e]()
 
 Not necessary (nor real improvment before 1E12) to use jvm option like:
  -XX:+AggressiveOpts
@@ -66,9 +66,6 @@ c:\~\nim-1.0.4>twinprimes_ssoz
  total time = 32.507 secs
 ```
  Inspired from a discussion @see "https://forum.nim-lang.org/t/4950" and
-Original nim source file, and updates, available here:
-[https://gist.github.com/jzakiya/6c7e1868bd749a6b1add62e3e3b2341e]()
-
 
 Mathematical and technical basis for implementation are explained here:
 [https://www.scribd.com/document/395415391/The-Use-of-Prime-Generators-to-
