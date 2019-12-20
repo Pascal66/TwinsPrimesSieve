@@ -1,0 +1,15 @@
+/bin/
+/.settings/
+.classpath
+.project
+log.txt
+
+.idea
+build
+gradle
+gradlew
+gradlew.bat
+
+archive
+# Project exclude paths
+/.gradle/
