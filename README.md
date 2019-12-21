@@ -67,19 +67,22 @@ c:\~\nim-1.0.4>twinprimes_ssoz
 ```
 
 Mathematical and technical basis for implementation are explained here:
-[https://www.scribd.com/document/395415391/The-Use-of-Prime-Generators-to-
-Implement-Fast-Twin-Primes-Sieve-Of-Zakiya-SoZ-Applications-to-Number-Theory-
-and-Implications-for-the-Riemann-Hypoth]()
-<p>[https://www.scribd.com/doc/228155369/The-Segmented-Sieve-of-Zakiya-SSoZ]()
-<p>[https://www.scribd.com/document/266461408/Primes-Utils-Handbook]()
 
-Java version 0.0.20 for fun - Pascal Pechard
+<https://www.scribd.com/document/395415391/The-Use-of-Prime-Generators-to-
+Implement-Fast-Twin-Primes-Sieve-Of-Zakiya-SoZ-Applications-to-Number-Theory-
+and-Implications-for-the-Riemann-Hypoth>
+
+<https://www.scribd.com/doc/228155369/The-Segmented-Sieve-of-Zakiya-SSoZ>
+<https://www.scribd.com/document/266461408/Primes-Utils-Handbook>
+
+Java version 0.0.20 - Pascal Péchard
 Version Date: 2019/12/20
 
 ## Releases
 
-* 3A
-*
+* 3A (Actual)
+* 1A
+* 1
 
 ## Getting Started
 

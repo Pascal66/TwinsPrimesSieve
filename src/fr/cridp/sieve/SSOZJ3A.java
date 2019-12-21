@@ -331,10 +331,10 @@ public class SSOZJ3A {
 		// for upper twinpair residue value
 		final long r_hi = restwins.get(indx);
 		// for each byte of resgroups in slice
-		for (int k = (int) (Kn - 1 >>> 3); k > -1; k--)
+		for (int k = 0; k <= (int) ((Kn - 1) >>> 3); k++)
 			// extract the primes for each resgroup
-			for (int r = 7; r > -1; r--)  {
-				if ((seg[k] | (1 << r)&0XFF) == 0 && modk + r_hi <= PGparam.Lend)
+			for (int r = 0; r <= 7; r++)  {
+				if ((seg[k] & (1 << r)&0XFF) == 0 && (modk + r_hi) <= PGparam.Lend)
 					// print twinprime mid val on a line
 					System.out.println(modk + r_hi - 1);
 				// set base value for next resgroup
@@ -468,7 +468,7 @@ public class SSOZJ3A {
 			// set 1st resgroup val of next seg slice
 			kmin += KB;
 			// set all seg byte bits to prime
-			Arrays.fill(seg, (short) 0);
+			Arrays.fill(seg, (byte) 0);
 			j = 0;
 		}
 		// numerate largest twin prime in segs
