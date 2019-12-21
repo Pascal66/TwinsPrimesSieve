@@ -103,7 +103,7 @@ License copy/terms are here:  http://www.gnu.org/licenses/
 
 Copyright (c) 2017-20 Jabari Zakiya -- jzakiya at gmail dot com
 Java version 0.0.20 for fun - Pascal Pechard
-Version Date: 2019/12/20
+Version Date: 2019/12/21
  */
 
 public class SSOZJ3A {

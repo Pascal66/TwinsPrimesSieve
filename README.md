@@ -68,15 +68,12 @@ c:\~\nim-1.0.4>twinprimes_ssoz
 
 Mathematical and technical basis for implementation are explained here:
 
-<https://www.scribd.com/document/395415391/The-Use-of-Prime-Generators-to-
-Implement-Fast-Twin-Primes-Sieve-Of-Zakiya-SoZ-Applications-to-Number-Theory-
-and-Implications-for-the-Riemann-Hypoth>
-
+<https://www.scribd.com/document/395415391/The-Use-of-Prime-Generators-to-Implement-Fast-Twin-Primes-Sieve-Of-Zakiya-SoZ-Applications-to-Number-Theory-and-Implications-for-the-Riemann-Hypoth>
 <https://www.scribd.com/doc/228155369/The-Segmented-Sieve-of-Zakiya-SSoZ>
 <https://www.scribd.com/document/266461408/Primes-Utils-Handbook>
 
-Java version 0.0.20 - Pascal Péchard
-Version Date: 2019/12/20
+Java version 0.0.20 - Pascal Péchard -- pascal at priveyes dot net
+Version Date: 2019/12/21
 
 ## Releases
 
@@ -86,9 +83,9 @@ Version Date: 2019/12/20
 
 ## Getting Started
 
-Clone the repository, create a plain Java project importing it, make sure that 'src' is the source folder of your project, and add the jars from the lib-folder to your classpath. 
+Clone the repository, create a plain Java project importing it, make sure that 'src' is the source folder of your project.
 You will need Java 8 or higher for the project to compile.
-There is no documentation and no support, so you should be ready to start exploring the source code.
+You should be ready to start exploring the source code.
 
 ## Remarks
 
