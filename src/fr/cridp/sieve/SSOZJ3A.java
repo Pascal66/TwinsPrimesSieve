@@ -103,7 +103,7 @@ License copy/terms are here:  http://www.gnu.org/licenses/
 
 Copyright (c) 2017-20 Jabari Zakiya -- jzakiya at gmail dot com
 Java version 0.0.20 for fun - Pascal Pechard
-Version Date: 2019/12/21
+Version Date: 2019/12/22
  */
 
 public class SSOZJ3A {
@@ -291,10 +291,10 @@ public class SSOZJ3A {
 				// compute cross-product for prm_r|ri pair
 				final int prod = prm_r * ri - 2;
 				// bit mask for prod's residue
-				final int bit_r =(1 << posn[(int) mod(prod , md)])&0XFF;
+				final int bit_r = (1 << posn[(int) mod(prod , md)])&0XFF;
 				// 1st resgroup for prime mult
 				int kpm = k * (prime + ri) + prod / md;
-				while (kpm < kmax){ prms[kpm] |= bit_r; kpm += prime; }
+				while (kpm < kmax) { prms[kpm] |= bit_r; kpm += prime; }
 			}
 		}
 
@@ -354,28 +354,28 @@ public class SSOZJ3A {
 	private static long[] nextp_init(long hi_r, Long prime, long kmin) {
 		// upper|lower twin pair residues
 		long r_hi = hi_r; long r_lo = r_hi - 2;
-			long[] modDiv = floorDivAndMod(prime - 2, PGparam.Lmodpg);
+		long[] modDiv = floorDivAndMod(prime - 2, PGparam.Lmodpg);
 			// find the resgroup it's in
-			long k = modDiv[0]; //(prime - 2) / PGparam.Lmodpg;
+		long k = modDiv[0]; //(prime - 2) / PGparam.Lmodpg;
 			// and its residue value
-			long r = modDiv[1] + 2; //mod(prime - 2, PGparam.Lmodpg) + 2;
+		long r = modDiv[1] + 2; //mod(prime - 2, PGparam.Lmodpg) + 2;
 			// and its residue inverse
-			long r_inv = resinvrs[(int) modDiv[1]/*(r - 2)*/];
+		long r_inv = resinvrs[(int) modDiv[1]/*(r - 2)*/];
 			// compute the rlow for r for lo_tp
-			long ro = mod(r_lo * r_inv - 2, PGparam.Lmodpg) + 2;
-			long ko = (k * (prime + ro) + (r * ro - 2) / PGparam.Lmodpg);
-			if (ko < kmin) {							// if 1st mult index < start_num's
-				ko = mod(kmin - ko, prime);			// how many indices short is it
-				if (ko > 0) ko = prime - ko;			// adjust index value into range
-			} else ko -= kmin;							// else here, adjust index if it was >
+		long ro = mod(r_lo * r_inv - 2, PGparam.Lmodpg) + 2;
+		long ko = (k * (prime + ro) + (r * ro - 2) / PGparam.Lmodpg);
+		if (ko < kmin) {							// if 1st mult index < start_num's
+			ko = mod(kmin - ko, prime);			// how many indices short is it
+			if (ko > 0) ko = prime - ko;			// adjust index value into range
+		} else ko -= kmin;							// else here, adjust index if it was >
 			// compute the rright for r for hi_tp
-			long ri = mod(r_hi * r_inv - 2, PGparam.Lmodpg) + 2;
-				long ki = k * (prime + ri) + (r * ri - 2) / PGparam.Lmodpg;
-				if (ki < kmin) {						// if 1st mult index < start_num's
-					ki = mod(kmin - ki, prime);		// how many indices short is it
-					if (ki > 0) ki = prime - ki;		// adjust index value into range
-				} else ki -= kmin;						// else here, adjust index if it was >
-			return new long[]{ko, ki};
+		long ri = mod(r_hi * r_inv - 2, PGparam.Lmodpg) + 2;
+		long ki = k * (prime + ri) + (r * ri - 2) / PGparam.Lmodpg;
+		if (ki < kmin) {						// if 1st mult index < start_num's
+			ki = mod(kmin - ki, prime);		// how many indices short is it
+			if (ki > 0) ki = prime - ki;		// adjust index value into range
+		} else ki -= kmin;						// else here, adjust index if it was >
+		return new long[]{ko, ki};
 	}
 
 	/**
@@ -477,7 +477,8 @@ public class SSOZJ3A {
 		// store final seg tp value
 		lastwins[indx] = (sum == 0 ? 1 : hi_tp);
 		// sum for twin pair
-		cnts[indx] = sum;                     		}
+		cnts[indx] = sum;
+	}
 
 	/**
 	 * Main routine to setup, time, and display results for twin primes sieve.
@@ -522,16 +523,16 @@ public class SSOZJ3A {
 
 		// number of twin primes in range
 		long twinscnt = 0;
-		// lo_range = lo_tp - 1 this isnt clear
+		// lo_range = lo_tp - 1
 		final long lo_range = restwins.getFirst() - 3;
 		// excluded low tp values for PGs used
 		for (int tp : new int[]{3, 5, 11, 17}) {
 			// if 3 end of range, no twin primes
 			if (end_num.equals(THREE)) break;
-			//.nim version if (tp/*.uint*/ in start_num..lo_range) twinscnt += 1; 	// cnt small tps if any
-			//.other version if(Math.max(start_num.longValue(), tp) == Math.min(tp, lo_range)) twinscnt+=1;
+			//.nim version if (tp/*.uint*/ in start_num..lo_range) twinscnt += 1;
+			//.java version if(Math.max(start_num.longValue(), tp) == Math.min(tp, lo_range)) twinscnt+=1;
 			//.d version
-			if (tp >= PGparam.Lstart && tp <= lo_range) { twinscnt += 1; }
+			if (tp >= PGparam.Lstart && tp <= lo_range) { twinscnt += 1; } // cnt small tps if any
 		}
 		// sieve setup time
 		long te = epochTime() - ts;

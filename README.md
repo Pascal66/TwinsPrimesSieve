@@ -73,7 +73,7 @@ Mathematical and technical basis for implementation are explained here:
 <https://www.scribd.com/document/266461408/Primes-Utils-Handbook>
 
 Java version 0.0.20 - Pascal Péchard -- pascal at priveyes dot net
-Version Date: 2019/12/21
+<p>Version Date: 2019/12/22
 
 ## Releases
 
