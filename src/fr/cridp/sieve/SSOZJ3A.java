@@ -94,8 +94,8 @@ Original d source file, and updates, available here:
 https://gist.github.com/jzakiya/ae93bfa03dbc8b25ccc7f97ff8ad0f61
 
 Mathematical and technical basis for implementation are explained here:
-https://www.scribd.com/document/395415391/The-Use-of-Prime-Generators-to-Implement-Fast-Twin-Primes-Sieve-Of-Zakiya-SoZ-Applications-to-Number-Theory-and-Implications-for-the-Riemann-Hypoth
-https://www.scribd.com/doc/228155369/The-Segmented-Sieve-of-Zakiya-SSoZ
+ https://www.academia.edu/37952623/The-Use-of-Prime-Generators-to-Implement-Fast-Twin-Primes-Sieve-Of-Zakiya-SoZ-Applications-to-Number-Theory-and-Implications-for-the-Riemann-Hypoth
+ https://www.academia.edu/7583194/The_Segmented_Sieve_of_Zakiya_SSoZ
 https://www.scribd.com/document/266461408/Primes-Utils-Handbook
 
 This code is provided free and subject to copyright and terms of the
@@ -666,7 +666,7 @@ public class SSOZJ3A {
 	 * @param x BigInteger
 	 * @return BigInteger sqrt of x
 	 */
-	private static BigInteger Bsqrt(BigInteger x) {
+	public static BigInteger Bsqrt(BigInteger x) {
 		BigInteger div = BigInteger.ZERO.setBit(x.bitLength()/2);
 		BigInteger div2 = div;
 		// Loop until we hit the same value twice in a row, or wind up alternating.

@@ -68,8 +68,8 @@ c:\~\nim-1.0.4>twinprimes_ssoz
 
 Mathematical and technical basis for implementation are explained here:
 
-<https://www.scribd.com/document/395415391/The-Use-of-Prime-Generators-to-Implement-Fast-Twin-Primes-Sieve-Of-Zakiya-SoZ-Applications-to-Number-Theory-and-Implications-for-the-Riemann-Hypoth>
-<https://www.scribd.com/doc/228155369/The-Segmented-Sieve-of-Zakiya-SSoZ>
+ <https://www.academia.edu/37952623The_Use_of_Prime_Generators_to_Implement_Fast_Twin_Primes_Sieve_of_Zakiya_SoZ_Applications_to_Number_Theory_and_Implications_for_the_Riemann_Hypotheses>
+ <https://www.academia.edu/7583194/The_Segmented_Sieve_of_Zakiya_SSoZ>
 <https://www.scribd.com/document/266461408/Primes-Utils-Handbook>
 
 ## Releases
