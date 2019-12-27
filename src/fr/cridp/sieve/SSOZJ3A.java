@@ -8,10 +8,13 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.IntStream;
 
 import static java.math.BigInteger.ONE;
@@ -85,15 +88,13 @@ JAVA Example :
  total twins = 424084653; last twin = 199999999890+/-1
  total time = 32.507 secs
 
- Inspired from a discussion @see "https://forum.nim-lang.org/t/4950" and
 Original nim source file, and updates, available here:
 https://gist.github.com/jzakiya/6c7e1868bd749a6b1add62e3e3b2341e
-This work isnt here to prove anything, or wich language is better or not.
+Original d source file, and updates, available here:
+https://gist.github.com/jzakiya/ae93bfa03dbc8b25ccc7f97ff8ad0f61
 
 Mathematical and technical basis for implementation are explained here:
-https://www.scribd.com/document/395415391/The-Use-of-Prime-Generators-to-
-Implement-Fast-Twin-Primes-Sieve-Of-Zakiya-SoZ-Applications-to-Number-Theory-
-and-Implications-for-the-Riemann-Hypoth
+https://www.scribd.com/document/395415391/The-Use-of-Prime-Generators-to-Implement-Fast-Twin-Primes-Sieve-Of-Zakiya-SoZ-Applications-to-Number-Theory-and-Implications-for-the-Riemann-Hypoth
 https://www.scribd.com/doc/228155369/The-Segmented-Sieve-of-Zakiya-SSoZ
 https://www.scribd.com/document/266461408/Primes-Utils-Handbook
 
@@ -102,8 +103,8 @@ GNU General Public License Version 3, GPLv3, or greater.
 License copy/terms are here:  http://www.gnu.org/licenses/
 
 Copyright (c) 2017-20 Jabari Zakiya -- jzakiya at gmail dot com
-Java version 0.0.20 for fun - Pascal Pechard
-Version Date: 2019/12/22
+Java version 0.0.20 for fun - Pascal Pechard -- pascal at priveyes dot net
+Version Date: 2019/12/27
  */
 
 public class SSOZJ3A {
@@ -122,9 +123,12 @@ public class SSOZJ3A {
 	static BigInteger modpg;       		// PG's modulus value
 	static long res_0;       			// PG's first residue value
 	static LinkedList<Long> restwins; 	// PG's list of twinpair residues
-	static long[] resinvrs; // PG's list of residues inverses
+	static long[] resinvrs; 			// PG's list of residues inverses
 	static int Bn;       				// segment size factor for PG and input number
 	static int s;       				// 0|3 for 1|8 resgroups/byte for 'small|large' ranges
+	static final Float[] Brun = {0F};
+
+	static ConcurrentSkipListSet<Long> first100 = new ConcurrentSkipListSet<>();
 
 	// Global array used to count number of primes in each 'seg' byte.
 	// Each value is number of '0' bits (primes) for values 0..255.
@@ -142,7 +146,6 @@ public class SSOZJ3A {
 	 * Create constant parameters for given PG at build time.
 	 * Using BigInteger permit Optimized gcd and ModInverse
 	 * At build time, both version (Long and BigInteger are created) depend of inputs
-	 * This give loosing time at setup and benefit for parallel computation
 	 * @param prime int
 	 */
 	private static void genPGparameters(int prime){
@@ -153,8 +156,10 @@ public class SSOZJ3A {
 			if (prm > prime) break; modpg = modpg.multiply(BigInteger.valueOf(res_0));
 		}
 
-		LinkedList<Long> restwins = new LinkedList<>(); 			// save upper twin pair residues here
-		long[] inverses = new long[modpg.intValue()];				// save PG's residues inverses here
+		// save upper twin pair residues here
+		LinkedList<Long> restwins = new LinkedList<>();
+		// save PG's residues inverses here
+		long[] inverses = new long[modpg.intValue()];
 		BigInteger pc = THREE.add(TWO); int inc = 2; BigInteger res = ZERO;
 		while (pc.compareTo(modpg.divide(TWO)) < 0) {       		// find a residue, then modular complement
 			if (modpg.gcd(pc).equals(ONE)) {          				// if pc a residue
@@ -253,6 +258,7 @@ public class SSOZJ3A {
 		s = range.compareTo(BigInteger.valueOf(100_000_000_000L))<0 ? 0 : 3;
 		genPGparameters(pg);
 	}
+
 	/**
 	 * Compute the primes r1..sqrt(input_num) and store in global 'primes' array.
 	 * Any algorithm (fast|small) is usable. Here the SoZ for P5 is used.
@@ -268,7 +274,8 @@ public class SSOZJ3A {
 				0,5,0,0,0,0,0,6,0,7};
 
 		final long sqrtN = Bsqrt(val).longValue(); 	// Biginteger sqrt of sqrt(input value)
-		final int kmax = val.subtract(BigInteger.valueOf(7L)).divide(BigInteger.valueOf(md)).add(ONE).intValue();   // number of resgroups to input value
+		// number of resgroups to input value
+		final int kmax = val.subtract(BigInteger.valueOf(7L)).divide(BigInteger.valueOf(md)).add(ONE).intValue();
 
 		// byte array of prime candidates init '0'
 		short[] prms = new short[kmax];
@@ -300,9 +307,8 @@ public class SSOZJ3A {
 
 		//  prms now contains the nonprime positions for the prime candidates r1..N
 		//  extract primes into global var 'primes'
-
 		// create empty dynamic array for primes
-		// Here we use the ArrayDeQueue because First & Last are O(1) and iterate like any others: O(n)
+		// Here I use the ArrayDeQueue because First & Last are O(1) and iterate like any others: O(n)
 		 primes = new ArrayDeque<Long>();
 		// for each resgroup
 		IntStream.range(0, kmax).forEach(km->{
@@ -331,17 +337,30 @@ public class SSOZJ3A {
 		// for upper twinpair residue value
 		final long r_hi = restwins.get(indx);
 		// for each byte of resgroups in slice
-		for (int k = 0; k <= (int) ((Kn - 1) >>> 3); k++)
-			// extract the primes for each resgroup
-			for (int r = 0; r <= 7; r++)  {
-				if ((seg[k] & (1 << r)&0XFF) == 0 && (modk + r_hi) <= PGparam.Lend)
-					// print twinprime mid val on a line
-					System.out.println(modk + r_hi - 1);
-				// set base value for next resgroup
-				modk += PGparam.Lmodpg;
-			}
+			for (int k = 0; k <= (int) ((Kn - 1) >>> 3); k++)
+				// extract the primes for each resgroup
+				for (int r = 0; r <= 7; r++) {
+					if ((seg[k] & (1 << r) & 0XFF) == 0 && (modk + r_hi) <= PGparam.Lend) {    // print twinprime mid val on a line
+						// System.out.println(modk + r_hi - 1);
+						// save first100 twin prime
+						Long l = modk + r_hi;
+						addFirst100(l);
+						Brun[0] += (1F / (l - 1) + 1F / (l + 1));
+					}
+					// set base value for next resgroup
+					modk += PGparam.Lmodpg;
+				}
 	}
-
+	static void addFirst100(Long tw) {
+		if (first100.size() < 99) {
+			first100.add(tw);
+		} else {
+			Long high = first100.last();
+			if (high.compareTo(tw) > 0)
+				first100.remove(high);
+			first100.add(tw);
+		}
+	}
 	/**
 	 * Compute 1st prime multiple resgroups for each prime r1..sqrt(N)
 	 * and store consecutively as lo_tp|hi_tp pairs for their restracks.
@@ -386,7 +405,7 @@ public class SSOZJ3A {
 	 * for primes mults resgroups, and update 'nextp' restrack slices acccordingly.
 	 * <p>
 	 * Find last twin prime|sum for range, store in their arrays for this twinpair.
-	 * Can optionally compile to print mid twinprime values generated by twinpair.
+	 * Can optionally store to debug print mid twinprime values generated by twinpair.
 	 * Uses optimum segment sieve structure for 'small' and 'large' range values.
 	 *
 	 * @param indx
@@ -463,8 +482,9 @@ public class SSOZJ3A {
 				else while (seg[upk] != 0) upk--;
 				// numerate its full resgroup value
 				hi_tp = kmin + upk;
-			}
-			//printprms(Kn, kmin, indx, seg);  // optional: display twin primes in seg
+							}
+			// optional: store twin primes in seg
+			if (PGparam.Lend<= 1000) printprms(Kn, kmin, indx, seg);
 			// set 1st resgroup val of next seg slice
 			kmin += KB;
 			// set all seg byte bits to prime
@@ -488,10 +508,14 @@ public class SSOZJ3A {
 		// start timing sieve setup execution
 		long ts = epochTime();
 
-		selectPG(start_num, end_num);     		 // select PG and seg factor Bn for input range
-		final int pairscnt = restwins.size();    // number of twin pairs for selected PG
-		cnts = new long[pairscnt];     			 // array to hold count of tps for each thread
-		lastwins = new long[pairscnt];			 // array to hold largest tp for each thread
+		// select PG and seg factor Bn for input range
+		selectPG(start_num, end_num);
+		// number of twin pairs for selected PG
+		final int pairscnt = restwins.size();
+		// array to hold count of tps for each thread
+		cnts = new long[pairscnt];
+		// array to hold largest tp for each thread
+		lastwins = new long[pairscnt];
 
 		// number of range resgroups, at least 1
 		final Long range = PGparam.Lkmax - PGparam.Lkmin + 1;
@@ -507,12 +531,12 @@ public class SSOZJ3A {
 
 		System.out.println("each thread segment is ["+ 1+ " x "+ PGparam.segByteSize+ "] bytes array");
 
-		// This is not necessary for running the program but provides information
+		// -- This is not necessary for running the program but provides information
 		// to determine the 'efficiency' of the used PG: (num of primes)/(num of pcs)
 		// Maximum number of twinprime pcs
 		final long maxpairs = range * pairscnt;
 		System.out.println("twinprime candidates = "+ maxpairs+ "; resgroups = "+ range);
-		//   End of non-essential code.
+		// -- End of non-essential code.
 
 		// Generate sieving primes <= sqrt(end_num)
 		if (PGparam.Lend < 49L) primes.add((5L));
@@ -529,10 +553,12 @@ public class SSOZJ3A {
 		for (int tp : new int[]{3, 5, 11, 17}) {
 			// if 3 end of range, no twin primes
 			if (end_num.equals(THREE)) break;
+
+			// cnt small tps if any
 			//.nim version if (tp/*.uint*/ in start_num..lo_range) twinscnt += 1;
 			//.java version if(Math.max(start_num.longValue(), tp) == Math.min(tp, lo_range)) twinscnt+=1;
 			//.d version
-			if (tp >= PGparam.Lstart && tp <= lo_range) { twinscnt += 1; } // cnt small tps if any
+			if (tp >= PGparam.Lstart && tp <= lo_range) { twinscnt += 1; }
 		}
 		// sieve setup time
 		long te = epochTime() - ts;
@@ -577,14 +603,22 @@ public class SSOZJ3A {
 		long Kn = mod(range, KB);
 		// if multiple of seg size set to seg size
 		if (Kn == 0) Kn = KB;
-		// Free memory
-		cnts = null; lastwins = null;
 		// sieve execution time
 		long t2 = epochTime() - t1;
 		System.out.println("sieve time = "+ t2/1e3 + " secs");
 		System.out.println("last segment = "+ Kn+ " resgroups; segment slices = "+ ((range-1) / KB + 1));
 		System.out.println("total twins = "+ twinscnt+ "; last twin = "+ (last_twin-1) + "+/-1");
 		System.out.println("total time = "+ (t2 + te)/1e3 + " secs\n");
+		// Free memory
+		cnts = null; lastwins = null;
+
+		if (PGparam.Lend <= 1000) {
+			System.out.println("Lasts +/-1: ");
+			System.out.println(
+				Arrays.toString(first100.stream()//.sorted(Comparator.reverseOrder())
+										.limit(50).map(l -> l - 1)//.sorted()
+										.toArray()));
+			System.out.println("Brun : " + Brun[0]); }
 	}
 
 	public static void main(String[] args) {
@@ -592,6 +626,7 @@ public class SSOZJ3A {
 		Scanner userInput = new Scanner(System.in).useDelimiter("[,\\s+]");
 		System.out.println("Please enter an range of integer (comma or space separated): ");
 		//Only BigDecimal understand scientific notation
+		//This permit to enter 1e6 instead of 1000000
 		BigInteger stop = userInput.nextBigDecimal().toBigIntegerExact();
 		BigInteger start = userInput.hasNextLine()?userInput.nextBigDecimal().toBigIntegerExact():THREE;
 

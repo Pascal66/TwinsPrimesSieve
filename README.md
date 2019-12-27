@@ -72,9 +72,6 @@ Mathematical and technical basis for implementation are explained here:
 <https://www.scribd.com/doc/228155369/The-Segmented-Sieve-of-Zakiya-SSoZ>
 <https://www.scribd.com/document/266461408/Primes-Utils-Handbook>
 
-Java version 0.0.20 - Pascal Péchard -- pascal at priveyes dot net
-<p>Version Date: 2019/12/22
-
 ## Releases
 
 * 3A (Actual)
@@ -84,11 +81,14 @@ Java version 0.0.20 - Pascal Péchard -- pascal at priveyes dot net
 ## Getting Started
 
 Clone the repository, create a plain Java project importing it, make sure that 'src' is the source folder of your project.
+Or simply use the gist https://gist.github.com/Pascal66/4d4229e88f4002641ddcaa5eccd0f6d5
 You will need Java 8 or higher for the project to compile.
 You should be ready to start exploring the source code.
 
 ## Remarks
 
+Java version 0.0.20 - Pascal Péchard -- pascal at priveyes dot net
+<p>Version Date: 2019/12/27
 
 ## Authors
 
