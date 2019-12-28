@@ -94,8 +94,8 @@ Original d source file, and updates, available here:
 https://gist.github.com/jzakiya/ae93bfa03dbc8b25ccc7f97ff8ad0f61
 
 Mathematical and technical basis for implementation are explained here:
- https://www.academia.edu/37952623/The-Use-of-Prime-Generators-to-Implement-Fast-Twin-Primes-Sieve-Of-Zakiya-SoZ-Applications-to-Number-Theory-and-Implications-for-the-Riemann-Hypoth
- https://www.academia.edu/7583194/The_Segmented_Sieve_of_Zakiya_SSoZ
+https://www.academia.edu/37952623The_Use_of_Prime_Generators_to_Implement_Fast_Twin_Primes_Sieve_of_Zakiya_SoZ_Applications_to_Number_Theory_and_Implications_for_the_Riemann_Hypotheses
+https://www.academia.edu/7583194/The_Segmented_Sieve_of_Zakiya_SSoZ
 https://www.scribd.com/document/266461408/Primes-Utils-Handbook
 
 This code is provided free and subject to copyright and terms of the
@@ -104,13 +104,14 @@ License copy/terms are here:  http://www.gnu.org/licenses/
 
 Copyright (c) 2017-20 Jabari Zakiya -- jzakiya at gmail dot com
 Java version 0.0.20 for fun - Pascal Pechard -- pascal at priveyes dot net
-Version Date: 2019/12/27
+Version Date: 2019/12/28
  */
 
 public class SSOZJ3A {
 
 	static final BigInteger TWO = ONE.add(ONE);
 	static final BigInteger THREE = TWO.add(ONE);
+	private static final boolean DEBUG = true;
 
 	static long KB = 0L;               	// segment size for each seg restrack
 	static BigInteger start_num;      	// lo number for range
@@ -126,7 +127,6 @@ public class SSOZJ3A {
 	static long[] resinvrs; 			// PG's list of residues inverses
 	static int Bn;       				// segment size factor for PG and input number
 	static int s;       				// 0|3 for 1|8 resgroups/byte for 'small|large' ranges
-	static final Float[] Brun = {0F};
 
 	static ConcurrentSkipListSet<Long> first100 = new ConcurrentSkipListSet<>();
 
@@ -305,8 +305,8 @@ public class SSOZJ3A {
 			}
 		}
 
-		//  prms now contains the nonprime positions for the prime candidates r1..N
-		//  extract primes into global var 'primes'
+		// prms now contains the nonprime positions for the prime candidates r1..N
+		// extract primes into global var 'primes'
 		// create empty dynamic array for primes
 		// Here I use the ArrayDeQueue because First & Last are O(1) and iterate like any others: O(n)
 		 primes = new ArrayDeque<Long>();
@@ -326,6 +326,7 @@ public class SSOZJ3A {
 	/**
 	 * Print twinprimes for given twinpair for given segment slice.
 	 * Primes will not be displayed in sorted order, collect|sort later for that.
+	 *
 	 * @param Kn Long
 	 * @param Ki Long
 	 * @param indx int
@@ -345,7 +346,6 @@ public class SSOZJ3A {
 						// save first100 twin prime
 						Long l = modk + r_hi;
 						addFirst100(l);
-						Brun[0] += (1F / (l - 1) + 1F / (l + 1));
 					}
 					// set base value for next resgroup
 					modk += PGparam.Lmodpg;
@@ -482,9 +482,9 @@ public class SSOZJ3A {
 				else while (seg[upk] != 0) upk--;
 				// numerate its full resgroup value
 				hi_tp = kmin + upk;
-							}
-			// optional: store twin primes in seg
-			if (PGparam.Lend<= 1000) printprms(Kn, kmin, indx, seg);
+				// optional: store twin primes in seg
+				if (DEBUG) printprms(Kn, kmin, indx, seg);
+			}
 			// set 1st resgroup val of next seg slice
 			kmin += KB;
 			// set all seg byte bits to prime
@@ -612,13 +612,13 @@ public class SSOZJ3A {
 		// Free memory
 		cnts = null; lastwins = null;
 
-		if (PGparam.Lend <= 1000) {
+		if (DEBUG) {
 			System.out.println("Lasts +/-1: ");
 			System.out.println(
-				Arrays.toString(first100.stream()//.sorted(Comparator.reverseOrder())
-										.limit(50).map(l -> l - 1)//.sorted()
-										.toArray()));
-			System.out.println("Brun : " + Brun[0]); }
+					Arrays.toString(first100.stream()//.sorted(Comparator.reverseOrder())
+											.limit(50).map(l -> l - 1)//.sorted()
+											.toArray()));
+		}
 	}
 
 	public static void main(String[] args) {
