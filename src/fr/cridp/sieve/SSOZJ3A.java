@@ -111,7 +111,7 @@ public class SSOZJ3A {
 
 	static final BigInteger TWO = ONE.add(ONE);
 	static final BigInteger THREE = TWO.add(ONE);
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 
 	static long KB = 0L;               	// segment size for each seg restrack
 	static BigInteger start_num;      	// lo number for range
