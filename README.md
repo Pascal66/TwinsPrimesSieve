@@ -10,9 +10,6 @@ twin prime value for the range; and the total time of execution.
 Fork this project from Github.
 There's no external dependencies
 
-Original nim source file, and updates, available here:
-[https://gist.github.com/jzakiya/6c7e1868bd749a6b1add62e3e3b2341e]()
-
 Computer used :
 TOSHIBA SATELLITE L875-13D Core i7-3630QM@2.4Ghz 12Go(8+4) Ram DDR3 800Mhz
 Cache1 32Ko, Cache2 256Ko, Cache3 6Mo
@@ -33,11 +30,18 @@ JAVA Example :
  total twins = 424084653; last twin = 199999999890+/-1
  total time = 30.339 secs
 ```
-Mathematical and technical basis for implementation are explained here:
 
- <https://www.academia.edu/37952623The_Use_of_Prime_Generators_to_Implement_Fast_Twin_Primes_Sieve_of_Zakiya_SoZ_Applications_to_Number_Theory_and_Implications_for_the_Riemann_Hypotheses>
- <https://www.academia.edu/7583194/The_Segmented_Sieve_of_Zakiya_SSoZ>
-<https://www.scribd.com/document/266461408/Primes-Utils-Handbook>
+Original nim source file, and updates, available here:
+https://gist.github.com/jzakiya/6c7e1868bd749a6b1add62e3e3b2341e
+Original d source file, and updates, available here:
+https://gist.github.com/jzakiya/ae93bfa03dbc8b25ccc7f97ff8ad0f61
+Original rust source file, and updates, available here:
+https://gist.github.com/jzakiya/b96b0b70cf377dfd8feb3f35eb437225
+
+Mathematical and technical basis for implementation are explained here:
+https://www.academia.edu/37952623The_Use_of_Prime_Generators_to_Implement_Fast_Twin_Primes_Sieve_of_Zakiya_SoZ_Applications_to_Number_Theory_and_Implications_for_the_Riemann_Hypotheses
+https://www.academia.edu/7583194/The_Segmented_Sieve_of_Zakiya_SSoZ
+https://www.academia.edu/19786419/PRIMES-UTILS_HANDBOOK
 
 ## Releases
 
