@@ -15,20 +15,20 @@ TOSHIBA SATELLITE L875-13D Core i7-3630QM@2.4Ghz 12Go(8+4) Ram DDR3 800Mhz
 Cache1 32Ko, Cache2 256Ko, Cache3 6Mo
 
 JAVA Example :
-``` Please enter an range of integer (comma or space separated):
- 0 2e11
+``` Please enter an range of integer (comma or space separated): 
+0 2e11
  Max threads = 8
- generating parameters for P 13
- each thread segment is [1 x 65536] bytes array
- twinprime candidates = 9890110395; resgroups = 6660007
- each 1485 threads has nextp[2 x 37493] array
- setup time = 0.11 secs
- perform twinprimes ssoz sieve with s=3
- 1485 of 1485 threads done
- sieve time = 30.229 secs
- last segment = 368551 resgroups; segment slices = 13
- total twins = 424084653; last twin = 199999999890+/-1
- total time = 30.339 secs
+Using Prime Generator parameters for given Pn 13
+segment size = 524288 resgroups; seg array is [1 x 8192] 64-bits
+twinprime candidates = 9890110395 ; resgroups = 6660007
+each 1485 threads has nextp[2 x 37493] array
+setup time = 0.111 secs
+perform twinprimes ssoz sieve with s=6
+1485 of 1485 threads done
+sieve time = 23.793 secs
+last segment = 368551 resgroups; segment slices = 13
+total twins = 424084653; last twin = 199999999890+/-1
+total time = 23.904 secs
 ```
 
 Original nim source file, and updates, available here:
