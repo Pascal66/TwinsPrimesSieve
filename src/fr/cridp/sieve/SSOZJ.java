@@ -12,10 +12,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static fr.cridp.sieve.PhiFinder.phi_factor;
 import static java.math.BigInteger.ONE;
 import static java.math.BigInteger.ZERO;
 
@@ -27,19 +25,7 @@ Inputs are single values N, of 64-bits, 0 -- 2^64 - 1.
 Output is the number of twin primes <= N; the last
 twin prime value for the range; and the total time of execution.
 
-Parameter tuning would be needed to optimize for other hardware systems (ARM, PowerPC, etc).
-
-Create a new java project from Eclipse (or equivalent)
-There's no external dependencies
-Copy this file in the src folder of the newly created project
-(Change the package name according the name of your project)
-OR
-javac SSOZJ.java
-java SSOZJ
-OR JDK 11
-java SSOZJ.java
-
- Run as Java application, and enter a N value when asked in console.
+ Run as Java application, and enter a range (comma or space spareted) when asked in console.
 
 This java source file, and updates, will be available here:
 https://gist.github.com/Pascal66/4d4229e88f4002641ddcaa5eccd0f6d5
@@ -56,51 +42,33 @@ Not necessary (no real improvment) to use jvm option like:
  Please enter an range of integer (comma or space separated):
  0 1e11
  Max threads = 8
- generating parameters for P 13
- each thread segment is [1 x 131072] bytes array
- twinprime candidates = 4945055940; resgroups = 3330004
+ Using Prime Generator parameters for given Pn 13
+ segment size = 524288 resgroups; seg array is [1 x 8192] 64-bits
+ twinprime candidates = 4945055940 ; resgroups = 3330004
  each 1485 threads has nextp[2 x 27287] array
- setup time = 0.063 secs
- perform twinprimes ssoz sieve with s=0
-
+ setup time = 0.115 secs
+ perform twinprimes ssoz sieve with s=6
  1485 of 1485 threads done
- sieve time = 20.206 secs
- last segment = 53204 resgroups; segment slices = 26
+ sieve time = 12.126 secs
+ last segment = 184276 resgroups; segment slices = 7
  total twins = 224376048; last twin = 99999999762+/-1
- total time = 20.269 secs
-
- c:\~\nim-1.0.4>twinprimes_ssoz
- 100000000000
- threads = 8
- each thread segment is [1 x 131072] bytes array
- twinprime candidates = 4945055940; resgroups = 3330004
- each 1485 threads has nextp[2 x 27287] array
- setup time = 0.015576 secs
- perform twinprimes ssoz sieve
+ total time = 12.241 secs
+ Please enter an range of integer (comma or space separated):
+ 0 2e11
+ Max threads = 8
+ Using Prime Generator parameters for given Pn 13
+ segment size = 524288 resgroups; seg array is [1 x 8192] 64-bits
+ twinprime candidates = 9890110395 ; resgroups = 6660007
+ each 1485 threads has nextp[2 x 37493] array
+ setup time = 0.117 secs
+ perform twinprimes ssoz sieve with s=6
  1485 of 1485 threads done
- sieve time = 11.884 secs
- last segment = 53204 resgroups; segment slices = 26
- total twins = 224376048; last twin = 99999999762+/-1
- total time = 11.899 secs
+ sieve time = 23.381 secs
+ last segment = 368551 resgroups; segment slices = 13
+ total twins = 424070131; last twin = 199999999890+/-1
+ total time = 23.498 secs
 
- Some timing :
- 15122019 twin_sieve internal time 13.9470 s (1e11 s=0) @ 17.846s / nim 11.974s
- 15122019 twin_sieve internal time 27.3501 s (2e11 s=3) @ 35.762s / nim 20.000s
- 15122019 twin_sieve internal time 42.0042 s (3e11 s=3) @ 55.241s / nim 31.632s
- 15122019 twin_sieve internal time 71.7662 s (5e11 s=3) @ 93.834s / nim 49.671s
-
- 10012020 gap 1e11 2e11  199708605  18s
- 10012020 gap 2e11 3e11  191801047  20s ‭7.907.558‬
- 10012020 gap 3e11 4e11  186932018  25s ‭4.869.029‬ ‭3.038.529‬
- 10012020 gap 4e11 5e11  183404596  25s ‭3.527.422‬ ‭1.341.607‬ ‭1.696.922‬
- 10012020 gap 5e11 6e11  180694619  25s ‭2.709.977‬   ‭817.445‬
- 10012020 gap 6e11 7e11  178477447  27s ‭2.217.172‬   ‭492.805‬   324.640
- 10012020 gap 7e11 8e11  176604059  27s ‭1.873.388‬
- 10012020 gap 8e11 9e11  174989299  28s ‭1.614.760‬
- 10012020 gap 9e11 1e12  173597482  29s ‭1.391.817‬
-
- Inspired from a discussion @see "https://forum.nim-lang.org/t/4950" and
-Original nim source file, and updates, available here:
+ Original nim source file, and updates, available here:
 https://gist.github.com/jzakiya/6c7e1868bd749a6b1add62e3e3b2341e
 Original d source file, and updates, available here:
 https://gist.github.com/jzakiya/ae93bfa03dbc8b25ccc7f97ff8ad0f61
@@ -117,11 +85,11 @@ GNU General Public License Version 3, GPLv3, or greater.
 License copy/terms are here:  http://www.gnu.org/licenses/
 
 Copyright (c) 2017-20 Jabari Zakiya -- jzakiya at gmail dot com
-Java version 0.0.21 - Pascal Pechard -- pascal at priveyes dot net
-Version Date: 2020/01/12
+Java version 0.21.1B - Pascal Pechard -- pascal at priveyes dot net
+Version Date: 2020/01/13
  */
 
-public class SSOZJ1B {
+public class SSOZJ {
 
 	static final BigInteger TWO = ONE.add(ONE);
 	static final BigInteger THREE = TWO.add(ONE);
@@ -156,21 +124,21 @@ public class SSOZJ1B {
 			if (prm > prime) break; modpg = modpg.multiply(BigInteger.valueOf(res_0));
 		}
 
-		LinkedList<Long> restwins = new LinkedList<>(); 			// save upper twin pair residues here
-		long[] inverses = new long[modpg.intValue()+2];				// save PG's residues inverses here
+		LinkedList<Long> restwins = new LinkedList<>(); 		// save upper twin pair residues here
+		long[] inverses = new long[modpg.intValue()+2];			// save PG's residues inverses here
 		BigInteger pc = THREE.add(TWO); int inc = 2; BigInteger res = ZERO;
-		while (pc.compareTo(modpg.divide(TWO)) < 0) {       		// find a residue, then modular complement
-			if (modpg.gcd(pc).equals(ONE)) {          				// if pc a residue
-				final BigInteger pc_mc = modpg.subtract(pc);		// create its modular complement
-				Integer inv_r = pc.modInverse(modpg).intValue();	// modinv(pc, modpg);  // compute residues's inverse
-				inverses[pc.intValue()]= inv_r;   	// save its inverse
-				inverses[inv_r] = pc.intValue();     				// save its inverse inverse
-				inv_r = pc_mc.modInverse(modpg).intValue(); 		// compute residues's complement inverse
-				inverses[pc_mc.intValue()] = inv_r;	// save its inverse
+		while (pc.compareTo(modpg.divide(TWO)) < 0) {       	// find a residue, then modular complement
+			if (modpg.gcd(pc).equals(ONE)) {          			// if pc a residue
+				final BigInteger pc_mc = modpg.subtract(pc);	// create its modular complement
+				Integer inv_r = pc.modInverse(modpg).intValue();// modinv(pc, modpg);  // compute residues's inverse
+				inverses[pc.intValue()]= inv_r;					// save its inverse
+				inverses[inv_r] = pc.intValue();     			// save its inverse inverse
+				inv_r = pc_mc.modInverse(modpg).intValue(); 	// compute residues's complement inverse
+				inverses[pc_mc.intValue()] = inv_r;				// save its inverse
 				inverses[inv_r] = pc_mc.intValue();   			// save its inverse inverse
 				if (res.add(TWO).equals(pc)){
 					restwins.add(pc.longValue());
-					restwins.add(pc_mc.add(TWO).longValue());} 		// save hi_tp residues
+					restwins.add(pc_mc.add(TWO).longValue());} 	// save hi_tp residues
 				res = pc;
 			}
 			pc = BigInteger.valueOf(pc.longValue() + inc); inc ^= 0b110;
@@ -199,10 +167,10 @@ public class SSOZJ1B {
 		private static Long Lrange;
 
 		public PGparam(BigInteger modpg, Long res_0, LinkedList<Long> restwins, long[] inverses) {
-			SSOZJ1B.modpg = modpg;
-			SSOZJ1B.res_0 = res_0;
-			SSOZJ1B.restwins = restwins;
-			SSOZJ1B.resinvrs = inverses;
+			SSOZJ.modpg = modpg;
+			SSOZJ.res_0 = res_0;
+			SSOZJ.restwins = restwins;
+			SSOZJ.resinvrs = inverses;
 			Lmodpg = modpg.longValueExact();
 
 			Kmin = start_num.subtract(TWO).divide(modpg).add(ONE);	// number of resgroups to start_num
@@ -219,7 +187,7 @@ public class SSOZJ1B {
 			segByteSize = (int) ((KB-1 >>> S) + 1);
 
 			System.out.println("segment size = "+KB+" resgroups; seg array is [1 x "+segByteSize+"] 64-bits");
-			long maxpairs = Lrange * SSOZJ1B.restwins.size();     // maximum number of twinprime pcs
+			long maxpairs = Lrange * SSOZJ.restwins.size();     // maximum number of twinprime pcs
 			System.out.println("twinprime candidates = "+ maxpairs+ " ; resgroups = "+ Lrange);
 			}
 	}
@@ -405,18 +373,14 @@ public class SSOZJ1B {
 			if (KB > kmax - kmin) Kn = kmax - kmin;		// set last slice resgroup size
 			for (Long prime : primes) {
 				// for lower twin pair residue track
-				long k = nextp[(j[0] << 1)];			// starting from this resgroup in seg
-				while (k < Kn) {						// mark primenth resgroup bits prime mults
-					seg[(int) (k >>> S)] |= (1L << (k & BMASK));
-					k += prime;							// set next prime multiple resgroup
-				}
-				nextp[(j[0] << 1)] = (k - Kn);			// save 1st resgroup in next eligible seg
+				long k = nextp[j[0] << 1];			// starting from this resgroup in seg
+				for(;k < Kn; k+=prime)
+					seg[(int) (k >>> S)] |= (1L << (k & BMASK)); // mark primenth resgroup bits prime mults  andset next prime multiple resgroup
+				nextp[j[0] << 1] = (k - Kn);			// save 1st resgroup in next eligible seg
 				// for upper twin pair residue track
 				k = nextp[j[0] << 1 | 1];	// starting from this resgroup in seg
-				while (k < Kn) {						// mark primenth resgroup bits prime mults
-					seg[(int) (k >>> S)] |= (1L << (k & BMASK));
-					k += prime;							// set next prime multiple resgroup
-				}
+				for(;k < Kn; k+= prime) // mark primenth resgroup bits prime mults
+					seg[(int) (k >>> S)] |= (1L << (k & BMASK)); // set next prime multiple resgroup
 				nextp[j[0] << 1 | 1] = (k - Kn);	// save 1st resgroup in next eligible seg
 				j[0]++;
 			}
@@ -433,10 +397,9 @@ public class SSOZJ1B {
 			}
 			//printprms(Kn, kmin, indx, seg);  // optional: display twin primes in seg
 			kmin += KB;                        // set 1st resgroup val of next seg slice
-//			if (kmin < kmax) for (int b=upk>>>S; b>-1;b--) seg[b] = 0;
-			if (kmin < kmax) Arrays.fill(seg, 0);// set seg to all primes
-													// when sieve done for full range
-													// numerate largest twinprime in segs
+			if (kmin < kmax) for (int b=upk>>>S; b>-1;b--) seg[b] = 0;// set seg to all primes
+												// when sieve done for full range
+												// numerate largest twinprime in segs
 			j[0] = 0;
 		}
 		// numerate largest twin prime in segs
